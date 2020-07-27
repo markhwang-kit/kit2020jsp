@@ -18,31 +18,30 @@ form.jsp 에서 확인 버튼 누르면 이 페이지가 나옴
 당신이 입력한 번호: <%=num %> <br>
 당신이 입력한 이름: <%=name %> <br>
 
-DB에 저장<br>
-
 <%
 
 Connection conn = null;
 PreparedStatement pstmt = null;
-
+ResultSet rs = null;
 try {
 	Class.forName("com.mysql.jdbc.Driver");
 	conn = DriverManager.getConnection("jdbc:mysql://localhost/dbdb", "root", "1234");
 	System.out.println("연결 성공");
 	
-	String sql = "INSERT INTO bunho (num, name) VALUES(?, ?)";
+	String sql = "SELECT * FROM bunho WHERE num = ? AND name = ?";
 	pstmt = conn.prepareStatement(sql);
 	// 4. 데이터 binding
 	pstmt.setString(1, num);
 	pstmt.setString(2, name);
 	
-	int count = pstmt.executeUpdate();
-	if (count == 0) {
-		System.out.println("데이터 입력 실패");
+	rs = pstmt.executeQuery();
+	if (rs.next()) {
+		out.println("데이터 있다");
+		response.sendRedirect("check.jsp?c=1");
 	} else {
-		System.out.println("데이터 입력 성공");
+		out.println("데이터 없다");
+		response.sendRedirect("check.jsp?c=2");
 	}
-	response.sendRedirect("form.jsp");
 
 } catch (Exception e) {
 	System.out.println("에러: " + e);

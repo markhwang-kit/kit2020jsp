@@ -17,6 +17,9 @@ out.println(name);
 %>
 <br>
 이름: <%=name %>
+<br>
 <a href="form.jsp">번호 이름 쓰기 폼</a>
+<br>
+<a href="login.jsp">로그인 체크</a>
 </body>
 </html>
