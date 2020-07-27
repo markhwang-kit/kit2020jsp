@@ -17,5 +17,6 @@ out.println(name);
 %>
 <br>
 이름: <%=name %>
+<a href="form.jsp">번호 이름 쓰기 폼</a>
 </body>
 </html>
